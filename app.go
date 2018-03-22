@@ -41,11 +41,11 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/api/states/{id:[0-9]+}", a.getState).Methods("GET")
 	a.Router.HandleFunc("/api/states/{id:[0-9]+}", a.updateState).Methods("PUT")
 	a.Router.HandleFunc("/api/states/{id:[0-9]+}", a.deleteState).Methods("DELETE")
-	a.Router.HandleFunc("/api/states/{sid}/national_parks", a.getNationalPark).Methods("GET")
-	a.Router.HandleFunc("/api/states/{sid}/national_parks", a.createNationalPark).Methods("POST")
-	a.Router.HandleFunc("/api/states/{sid}/national_parks/{id:[0-9]+}", a.getNationalPark).Methods("GET")
-	a.Router.HandleFunc("/api/states/{sid}/national_parks/{id:[0-9]+}", a.updateNationalPark).Methods("PUT")
-	a.Router.HandleFunc("/api/states/{sid}/national_parks/{id:[0-9]+}", a.deleteNationalPark).Methods("DELETE")
+	// a.Router.HandleFunc("/api/states/{sid}/national_parks", a.getNationalPark).Methods("GET")
+	// a.Router.HandleFunc("/api/states/{sid}/national_parks", a.createNationalPark).Methods("POST")
+	// a.Router.HandleFunc("/api/states/{sid}/national_parks/{id:[0-9]+}", a.getNationalPark).Methods("GET")
+	// a.Router.HandleFunc("/api/states/{sid}/national_parks/{id:[0-9]+}", a.updateNationalPark).Methods("PUT")
+	// a.Router.HandleFunc("/api/states/{sid}/national_parks/{id:[0-9]+}", a.deleteNationalPark).Methods("DELETE")
 }
 
 func (a *App) getStates(w http.ResponseWriter, r *http.Request) {
@@ -69,20 +69,20 @@ func (a *App) getStates(w http.ResponseWriter, r *http.Request) {
 }
 
 func (a *App) createState(w http.ResponseWriter, r *http.Request) {
-	var p state
+	var s state
 	decoder := json.NewDecoder(r.Body)
-	if err := decoder.Decode(&p); err != nil {
+	if err := decoder.Decode(&s); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
 		return
 	}
 	defer r.Body.Close()
 
-	if err := p.createState(a.DB); err != nil {
+	if err := s.createState(a.DB); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
 
-	respondWithJSON(w, http.StatusCreated, p)
+	respondWithJSON(w, http.StatusCreated, s)
 }
 
 func (a *App) getState(w http.ResponseWriter, r *http.Request) {
@@ -129,7 +129,7 @@ func (a *App) updateState(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respondWithJSON(w, http.StatusOK, p)
+	respondWithJSON(w, http.StatusOK, s)
 }
 
 func (a *App) deleteState(w http.ResponseWriter, r *http.Request) {
