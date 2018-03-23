@@ -3,17 +3,18 @@ CREATE TABLE states (
     name varchar(50) NULL
 );
 
-CREATE TABLE national_parks
-(
+CREATE TABLE national_parks (
     id serial PRIMARY KEY,
-    name TEXT NOT NULL,
+    name varchar(50) NOT NULL,
     description TEXT NOT NULL,
-    date_designated timestamp NOT NULL,
+    nearest_city varchar(50) NOT NULL,
+    visitors integer NOT NULL,
+    established timestamp NOT NULL,
     state_id integer NULL
 );
 
 ALTER TABLE national_parks
-ADD CONSTRAINT fk_national_parks_states
+ADD CONSTRAINT fk_states_national_parks
 FOREIGN KEY (state_id)
 REFERENCES states(id)
 ON DELETE CASCADE;
