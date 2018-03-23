@@ -59,22 +59,46 @@ func (s *state) deleteState(db *sql.DB) error {
 	return err
 }
 
+func getParks(db *sql.DB, start, count, sid int) ([]park, error) {
+	rows, err := db.Query(
+		"SELECT id, name FROM national_parks WHERE state_id = $1 LIMIT $2 OFFSET $3",
+		sid, count, start)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	parks := []park{}
+
+	for rows.Next() {
+		var p park
+		if err := rows.Scan(&p.ID, &p.Name); err != nil {
+			return nil, err
+		}
+		parks = append(parks, p)
+	}
+
+	return parks, nil
+}
+
 // func getNationalParks(db *sql.DB, start, count int) ([]state, error) {
-// 	return nil, errors.New("Not implemented")
+//	return nil, errors.New("Not implemented")
 // }
 
 // func (p *nationalPark) getNationalPark(db *sql.DB) error {
-// 	return errors.New("Not implemented")
+//	return errors.New("Not implemented")
 // }
 
 // func (p *nationalPark) createNationalPark(db *sql.DB) error {
-// 	return errors.New("Not implemented")
+//	return errors.New("Not implemented")
 // }
 
 // func (p *nationalPark) updateNationalPark(db *sql.DB) error {
-// 	return errors.New("Not implemented")
+//	return errors.New("Not implemented")
 // }
 
 // func (p *nationalPark) deleteNationalPark(db *sql.DB) error {
-// 	return errors.New("Not implemented")
+//	return errors.New("Not implemented")
 // }

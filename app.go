@@ -39,7 +39,7 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/api/states/{id:[0-9]+}", a.getState).Methods("GET")
 	a.Router.HandleFunc("/api/states/{id:[0-9]+}", a.updateState).Methods("PUT")
 	a.Router.HandleFunc("/api/states/{id:[0-9]+}", a.deleteState).Methods("DELETE")
-	// a.Router.HandleFunc("/api/states/{sid}/national_parks", a.getNationalPark).Methods("GET")
+	a.Router.HandleFunc("/api/states/{sid}/parks", a.getParks).Methods("GET")
 	// a.Router.HandleFunc("/api/states/{sid}/national_parks", a.createNationalPark).Methods("POST")
 	// a.Router.HandleFunc("/api/states/{sid}/national_parks/{id:[0-9]+}", a.getNationalPark).Methods("GET")
 	// a.Router.HandleFunc("/api/states/{sid}/national_parks/{id:[0-9]+}", a.updateNationalPark).Methods("PUT")

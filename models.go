@@ -9,7 +9,7 @@ type state struct {
 	Name string `json:"name"`
 }
 
-type nationalPark struct {
+type park struct {
 	ID             string    `json:"id"`
 	Name           string    `json:"name"`
 	Description    string    `json:"description"`
