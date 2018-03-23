@@ -2,12 +2,14 @@ package handlers
 
 import (
 	"database/sql"
+	"encoding/json"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	"github.com/maikeulb/national-parks/app/data"
+	"github.com/maikeulb/national-parks/app/models"
 )
 
 func GetParks(db *sql.DB, w http.ResponseWriter, r *http.Request) {
@@ -51,7 +53,7 @@ func GetPark(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	p := models.Park{ID: id}
+	p := models.Park{ID: id, StateID: sid}
 	if err := data.GetPark(db, p); err != nil {
 		switch err {
 		case sql.ErrNoRows:
@@ -66,7 +68,15 @@ func GetPark(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 }
 
 func CreatePark(db *sql.DB, w http.ResponseWriter, r *http.Request) {
-	var p models.Park
+	vars := mux.Vars(r)
+	sid, err := strconv.Atoi(vars["sid"])
+	if err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid state ID")
+		return
+	}
+	p := models.Park{StateID: sid}
+
+	// var p models.Park
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&p); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
@@ -104,6 +114,7 @@ func UpdatePark(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	}
 	defer r.Body.Close()
 	p.ID = id
+	p.StateID = sid
 
 	if err := data.UpdatePark(db, p); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
@@ -118,12 +129,6 @@ func DeletePark(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid park ID")
-		return
-	}
-
-	sid, err := strconv.Atoi(vars["sid"])
-	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid state ID")
 		return
 	}
 
