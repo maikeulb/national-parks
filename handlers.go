@@ -137,6 +137,23 @@ func (a *App) getParks(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, parks)
 }
 
+func (a *App) createPark(w http.ResponseWriter, r *http.Request) {
+	var p park
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&p); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	defer r.Body.Close()
+
+	if err := p.createState(a.DB); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusCreated, p)
+}
+
 func respondWithError(w http.ResponseWriter, code int, message string) {
 	respondWithJSON(w, code, map[string]string{"error": message})
 }

@@ -93,17 +93,22 @@ func getParks(db *sql.DB, start, count, sid int) ([]park, error) {
 	return parks, nil
 }
 
-func getParks(db *sql.DB, start, count int) ([]state, error) {
-	return nil, errors.New("Not implemented")
-}
-
 // func (p *Park) getPark(db *sql.DB) error {
 //	return errors.New("Not implemented")
 // }
 
-// func (p *Park) createPark(db *sql.DB) error {
-//	return errors.New("Not implemented")
-// }
+func (p *park) createState(db *sql.DB) error {
+	err := db.QueryRow(
+		`INSERT INTO parks(name, description, nearest_city, visitors, established, state_id)
+					VALUES($1, $2, $3, $4, $5, $6) RETURNING id`,
+		p.Name, p.Description, p.NearestCity, p.Visitors, p.Established, p.StateID).Scan(&p.ID)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
 
 // func (p *Park) updatePark(db *sql.DB) error {
 //	return errors.New("Not implemented")
