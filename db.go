@@ -61,7 +61,11 @@ func (s *state) deleteState(db *sql.DB) error {
 
 func getParks(db *sql.DB, start, count, sid int) ([]park, error) {
 	rows, err := db.Query(
-		"SELECT id, name FROM national_parks WHERE state_id = $1 LIMIT $2 OFFSET $3",
+		`SELECT *
+				FROM national_parks
+				WHERE state_id = $1
+				LIMIT $2
+				OFFSET $3`,
 		sid, count, start)
 
 	if err != nil {
@@ -74,7 +78,13 @@ func getParks(db *sql.DB, start, count, sid int) ([]park, error) {
 
 	for rows.Next() {
 		var p park
-		if err := rows.Scan(&p.ID, &p.Name); err != nil {
+		if err := rows.Scan(&p.ID,
+			&p.Name,
+			&p.Description,
+			&p.NearestCity,
+			&p.Visitors,
+			&p.Established,
+			&p.StateID); err != nil {
 			return nil, err
 		}
 		parks = append(parks, p)
