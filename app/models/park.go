@@ -5,11 +5,11 @@ import (
 )
 
 type Park struct {
-	ID          int       `json:"id"`
-	Name        string    `json:"name"`
-	Description string    `json:"description"`
-	NearestCity string    `json:"nearestCity"`
-	Visitors    int       `json:"visitors"`
-	Established time.Time `json:"established"`
-	StateID     int       `json:"stateId"`
+	ID          int       `json:"id,omitempty"`
+	Name        string    `json:"name,omitempty"`
+	Description string    `json:"description,omitempty"`
+	NearestCity string    `json:"nearestCity,omitempty"`
+	Visitors    int       `json:"visitors,omitempty"`
+	Established time.Time `json:"established,omitempty"`
+	StateID     int       `json:"stateId,omitempty"`
 }
