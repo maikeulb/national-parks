@@ -4,7 +4,7 @@ INSERT INTO states (name) VALUES
 ('New York'),
 ('Utah');
 
-INSERT INTO national_parks (name, description, nearest_city, visitors, established, state_id) VALUES
+INSERT INTO parks (name, description, nearest_city, visitors, established, state_id) VALUES
 ('Yosemite', 'Recognized by its granite cliffs, waterfalls, clear streams, giant sequoia groves, lakes, mountains, glaciers, and biological diversity.', 'Mariposa', 4336890, '1890-10-01', 1),
 ('Redwood', 'Preserves redwood forests and other indegenous flora, fauna, grassland prarie, cultural resources, portioans of rivers and other streams and 37 miles of pristine coastline.', 'Crescent City', 445000, '1969-08-27', 1),
 ('Grand Canyon', 'Valued for its combination of size, depth, and exposed layers of colorful rocks dating back to Precambrian times.', 'Visalia', 6254238, '1919-02-26', 2),

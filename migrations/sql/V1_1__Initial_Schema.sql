@@ -3,7 +3,7 @@ CREATE TABLE states (
     name varchar(50) NULL
 );
 
-CREATE TABLE national_parks (
+CREATE TABLE parks (
     id serial PRIMARY KEY,
     name varchar(50) NOT NULL,
     description TEXT NOT NULL,
@@ -13,8 +13,8 @@ CREATE TABLE national_parks (
     state_id integer NULL
 );
 
-ALTER TABLE national_parks
-ADD CONSTRAINT fk_states_national_parks
+ALTER TABLE parks
+ADD CONSTRAINT fk_states_parks
 FOREIGN KEY (state_id)
 REFERENCES states(id)
 ON DELETE CASCADE;

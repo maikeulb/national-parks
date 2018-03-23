@@ -40,8 +40,8 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/api/states/{id:[0-9]+}", a.updateState).Methods("PUT")
 	a.Router.HandleFunc("/api/states/{id:[0-9]+}", a.deleteState).Methods("DELETE")
 	a.Router.HandleFunc("/api/states/{sid}/parks", a.getParks).Methods("GET")
-	// a.Router.HandleFunc("/api/states/{sid}/national_parks", a.createNationalPark).Methods("POST")
-	// a.Router.HandleFunc("/api/states/{sid}/national_parks/{id:[0-9]+}", a.getNationalPark).Methods("GET")
-	// a.Router.HandleFunc("/api/states/{sid}/national_parks/{id:[0-9]+}", a.updateNationalPark).Methods("PUT")
-	// a.Router.HandleFunc("/api/states/{sid}/national_parks/{id:[0-9]+}", a.deleteNationalPark).Methods("DELETE")
+	// a.Router.HandleFunc("/api/states/{sid}/parks", a.createPark).Methods("POST")
+	// a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.getPark).Methods("GET")
+	// a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.updatePark).Methods("PUT")
+	// a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.deletePark).Methods("DELETE")
 }
