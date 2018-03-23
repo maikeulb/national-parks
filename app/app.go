@@ -40,11 +40,11 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/api/states/{id:[0-9]+}", a.GetState).Methods("GET")
 	a.Router.HandleFunc("/api/states/{id:[0-9]+}", a.UpdateState).Methods("PUT")
 	a.Router.HandleFunc("/api/states/{id:[0-9]+}", a.DeleteState).Methods("DELETE")
-	// a.Router.HandleFunc("/api/states/{sid}/parks", handlers.GetParks).Methods("GET")
-	// a.Router.HandleFunc("/api/states/{sid}/parks", handlers.CreatePark).Methods("POST")
-	// a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.getPark).Methods("GET")
-	// a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.updatePark).Methods("PUT")
-	// a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.deletePark).Methods("DELETE")
+	a.Router.HandleFunc("/api/states/{sid}/parks", a.GetParks).Methods("GET")
+	a.Router.HandleFunc("/api/states/{sid}/parks", a.CreatePark).Methods("POST")
+	a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.GetPark).Methods("GET")
+	a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.UpdatePark).Methods("PUT")
+	a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.DeletePark).Methods("DELETE")
 }
 
 func (a *App) GetStates(w http.ResponseWriter, r *http.Request) {
@@ -65,4 +65,24 @@ func (a *App) UpdateState(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) DeleteState(w http.ResponseWriter, r *http.Request) {
 	handlers.DeleteState(a.DB, w, r)
+}
+
+func (a *App) GetParks(w http.ResponseWriter, r *http.Request) {
+	handlers.GetParks(a.DB, w, r)
+}
+
+func (a *App) CreatePark(w http.ResponseWriter, r *http.Request) {
+	handlers.CreatePark(a.DB, w, r)
+}
+
+func (a *App) GetPark(w http.ResponseWriter, r *http.Request) {
+	handlers.GetPark(a.DB, w, r)
+}
+
+func (a *App) UpdatePark(w http.ResponseWriter, r *http.Request) {
+	handlers.UpdatePark(a.DB, w, r)
+}
+
+func (a *App) DeletePark(w http.ResponseWriter, r *http.Request) {
+	handlers.DeletePark(a.DB, w, r)
 }

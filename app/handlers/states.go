@@ -32,23 +32,6 @@ func GetStates(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, states)
 }
 
-func CreateState(db *sql.DB, w http.ResponseWriter, r *http.Request) {
-	var s models.State
-	decoder := json.NewDecoder(r.Body)
-	if err := decoder.Decode(&s); err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
-		return
-	}
-	defer r.Body.Close()
-
-	if err := data.CreateState(db, s); err != nil {
-		respondWithError(w, http.StatusInternalServerError, err.Error())
-		return
-	}
-
-	respondWithJSON(w, http.StatusCreated, s)
-}
-
 func GetState(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id, err := strconv.Atoi(vars["id"])
@@ -69,6 +52,23 @@ func GetState(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	}
 
 	respondWithJSON(w, http.StatusOK, s)
+}
+
+func CreateState(db *sql.DB, w http.ResponseWriter, r *http.Request) {
+	var s models.State
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&s); err != nil {
+		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		return
+	}
+	defer r.Body.Close()
+
+	if err := data.CreateState(db, s); err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	respondWithJSON(w, http.StatusCreated, s)
 }
 
 func UpdateState(db *sql.DB, w http.ResponseWriter, r *http.Request) {
