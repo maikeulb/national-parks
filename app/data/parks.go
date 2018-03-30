@@ -42,12 +42,19 @@ func GetParks(db *sql.DB, start, count, sid int) ([]models.Park, error) {
 	return parks, nil
 }
 
-func GetPark(db *sql.DB, p models.Park) error {
+func GetPark(db *sql.DB, p *models.Park) error {
 	return db.QueryRow(
-		`SELECT *
-				FROM parks
-				WHERE id=$1 AND state_id = $2`,
+		`SELECT id,
+                name,
+                description,
+                nearest_city,
+                visitors,
+                established,
+                state_id
+		 FROM parks
+		 WHERE id=$1 AND state_id = $2`,
 		p.ID, p.StateID).Scan(
+		&p.ID,
 		&p.Name,
 		&p.Description,
 		&p.NearestCity,

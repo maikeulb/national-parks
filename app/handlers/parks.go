@@ -54,7 +54,7 @@ func GetPark(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	}
 
 	p := models.Park{ID: id, StateID: sid}
-	if err := data.GetPark(db, p); err != nil {
+	if err := data.GetPark(db, &p); err != nil {
 		switch err {
 		case sql.ErrNoRows:
 			respondWithError(w, http.StatusNotFound, "Park not found")
@@ -94,6 +94,7 @@ func CreatePark(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 
 func UpdatePark(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
+
 	id, err := strconv.Atoi(vars["id"])
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid park ID")
