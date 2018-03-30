@@ -80,13 +80,13 @@ func CreatePark(db *sql.DB, p models.Park) error {
 func UpdatePark(db *sql.DB, p models.Park) error {
 	_, err := db.Exec(
 		`UPDATE parks
-							SET name=$1
-							decription=$2
-							nearest_city=$3
-							visitors=$4
-							established=$5
-							state_id=$6
-							WHERE id=$7`,
+		SET name=$1,
+			description=$2,
+			nearest_city=$3,
+			visitors=$4,
+			established=$5,
+			state_id=$6
+		WHERE id=$7`,
 		p.Name, p.Description, p.NearestCity, p.Visitors, p.Established, p.StateID, p.ID)
 
 	return err
