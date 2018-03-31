@@ -31,6 +31,8 @@ func (a *App) Initialize(host, port, user, password, dbname string) {
 }
 
 func (a *App) Run(addr string) {
+	a.Router.Use(limitMiddleware)
+}
 	log.Fatal(http.ListenAndServe(addr, a.Router))
 }
 
@@ -86,11 +88,4 @@ func (a *App) UpdatePark(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) DeletePark(w http.ResponseWriter, r *http.Request) {
 	handlers.DeletePark(a.DB, w, r)
-}
-
-func (a *App) LoggingMiddleware(next http.Handler) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Println(r.RequestURI)
-		next.ServeHTTP(w, r)
-	})
 }
