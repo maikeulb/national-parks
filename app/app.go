@@ -43,8 +43,9 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/api/states/{sid}/parks", a.GetParks).Methods("GET")
 	a.Router.HandleFunc("/api/states/{sid}/parks", a.CreatePark).Methods("POST")
 	a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.GetPark).Methods("GET")
-	a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.UpdatePark).Methods("PUT")
+	a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.UpdatePark).Methods("PATCH")
 	a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.DeletePark).Methods("DELETE")
+	a.Router.Use(limitMiddleware)
 }
 
 func (a *App) GetStates(w http.ResponseWriter, r *http.Request) {
@@ -85,4 +86,11 @@ func (a *App) UpdatePark(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) DeletePark(w http.ResponseWriter, r *http.Request) {
 	handlers.DeletePark(a.DB, w, r)
+}
+
+func (a *App) LoggingMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Println(r.RequestURI)
+		next.ServeHTTP(w, r)
+	})
 }

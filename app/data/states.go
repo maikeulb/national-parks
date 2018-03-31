@@ -9,11 +9,11 @@ import (
 
 func GetStates(db *sql.DB, start, count int) ([]models.State, error) {
 	rows, err := db.Query(
-		`SELECT id, name 
-		FROM states 
-		LIMIT $1 
-		OFFSET $2`,
-		count, start)
+        `SELECT id, name 
+         FROM states 
+         LIMIT $1 
+         OFFSET $2`,
+		 count, start)
 
 	if err != nil {
 		return nil, err

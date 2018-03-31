@@ -2,6 +2,7 @@ package data
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/lib/pq"
 
 	"github.com/maikeulb/national-parks/app/models"
@@ -78,16 +79,28 @@ func CreatePark(db *sql.DB, p models.Park) error {
 }
 
 func UpdatePark(db *sql.DB, p models.Park) error {
+	fmt.Println(p.Established)
 	_, err := db.Exec(
-		`UPDATE parks
-		SET name=$1,
-			description=$2,
-			nearest_city=$3,
-			visitors=$4,
-			established=$5,
-			state_id=$6
-		WHERE id=$7`,
-		p.Name, p.Description, p.NearestCity, p.Visitors, p.Established, p.StateID, p.ID)
+		`UPDATE parks as p
+         SET name=case 
+                  when $1='' then p.name 
+                  else $1
+            end,
+            description=case
+                when $2='' then p.description
+                else $2
+            end,
+            nearest_city=case
+                when $3='' then p.nearest_city
+                else $3
+            end,
+            visitors=case
+                when $4=0 then p.visitors
+                else $4
+            end,
+            established=p.established
+		WHERE id=$5`,
+		p.Name, p.Description, p.NearestCity, p.Visitors, p.ID)
 
 	return err
 }

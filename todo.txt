@@ -1,0 +1,7 @@
+add number of parks per state
+filter parks by date
+order parks by visitors
+order parks by date
+add a criteria to filter, maybe?
+3rd party api, search?
+maybe add colleciton resources to parent
