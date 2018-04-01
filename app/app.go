@@ -31,8 +31,6 @@ func (a *App) Initialize(host, port, user, password, dbname string) {
 }
 
 func (a *App) Run(addr string) {
-	a.Router.Use(limitMiddleware)
-}
 	log.Fatal(http.ListenAndServe(addr, a.Router))
 }
 
@@ -47,7 +45,7 @@ func (a *App) initializeRoutes() {
 	a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.GetPark).Methods("GET")
 	a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.UpdatePark).Methods("PATCH")
 	a.Router.HandleFunc("/api/states/{sid}/parks/{id:[0-9]+}", a.DeletePark).Methods("DELETE")
-	a.Router.Use(limitMiddleware)
+	// a.Router.Use(limitMiddleware)
 }
 
 func (a *App) GetStates(w http.ResponseWriter, r *http.Request) {
