@@ -1,6 +1,6 @@
 CREATE TABLE states (
     id serial PRIMARY KEY,
-    name varchar(50) NULL
+    name varchar(50) NOT NULL
 );
 
 CREATE TABLE parks (
