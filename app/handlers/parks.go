@@ -36,7 +36,12 @@ func GetParks(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respondWithJSON(w, http.StatusOK, parks)
+	type Env struct {
+		Data []models.Park `json:"data"`
+	}
+
+	env := Env{Data: parks}
+	respondWithJSON(w, http.StatusOK, env)
 }
 
 func GetPark(db *sql.DB, w http.ResponseWriter, r *http.Request) {

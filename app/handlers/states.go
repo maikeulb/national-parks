@@ -29,7 +29,12 @@ func GetStates(db *sql.DB, w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	respondWithJSON(w, http.StatusOK, states)
+	type Env struct {
+		Data []models.State `json:"data"`
+	}
+	env := Env{Data: states}
+
+	respondWithJSON(w, http.StatusOK, env)
 }
 
 func GetState(db *sql.DB, w http.ResponseWriter, r *http.Request) {
