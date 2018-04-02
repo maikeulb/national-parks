@@ -39,8 +39,7 @@ func TestEmptyTable(t *testing.T) {
 	response := executeRequest(req)
 
 	checkResponseCode(t, http.StatusOK, response.Code)
-
-	if body := response.Body.String(); body != "[]" {
+	if body := response.Body.String(); body != "{'data':[]}" {
 		t.Errorf("Expected an empty array. Got %s", body)
 	}
 }
@@ -169,10 +168,10 @@ func TestCreatePark(t *testing.T) {
 // 	clearTable()
 // 	addStatesAndParks(1)
 
-// 	req, _ := http.NewRequest("GET", "/api/states/1/parks/1", nil)
-// 	response := executeRequest(req)
+// req, _ := http.NewRequest("GET", "/api/states/1/parks/1", nil)
+// response := executeRequest(req)
 
-// 	checkResponseCode(t, http.StatusOK, response.Code)
+// checkResponseCode(t, http.StatusOK, response.Code)
 // }
 
 // func TestUpdatePark(t *testing.T) {

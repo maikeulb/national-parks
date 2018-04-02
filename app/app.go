@@ -31,6 +31,7 @@ func (a *App) Initialize(host, port, user, password, dbname string) {
 }
 
 func (a *App) Run(addr string) {
+	fmt.Println("Listening on port: 5000")
 	log.Fatal(http.ListenAndServe(addr, a.Router))
 }
 
