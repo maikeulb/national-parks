@@ -8,7 +8,6 @@ import (
 func main() {
 	a := app.App{}
 	a.Initialize(
-
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_USERNAME"),
